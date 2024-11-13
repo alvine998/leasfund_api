@@ -7,8 +7,7 @@ export class Users {
     uuid: string;
 
     @IsString()
-    @Length(2, 100)
-    @Column()
+    @Column({ nullable: true })
     name: string;
 
     @Column()
@@ -18,18 +17,24 @@ export class Users {
     @Column({ nullable: true, unique: true })
     email: string | null;
 
-    @IsString()
-    @Length(8, 100)
-    @Column()
-    password: string;
+    // @IsString()
+    // @Length(8, 100)
+    // @Column()
+    // password: string;
 
-    @Column()
+    @Column({ default: "user" })
     role: string;
 
     @Column()
     referral_code: string;
 
-    @Column()
+    @Column({ nullable: true })
+    following_referral_code: string;
+
+    @Column({ nullable: true })
+    otp: string;
+
+    @Column({ default: 1 })
     status: number;
 
     @CreateDateColumn({ type: 'timestamp' })

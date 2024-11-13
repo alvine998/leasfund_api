@@ -55,6 +55,36 @@ export class UserController {
         return this.userService.create(user);
     }
 
+    @Post("sendotp")
+    @HttpCode(200)
+    async sendOtp(
+        @Body() user: Partial<Users>,
+        @Headers() headers: { access_token: string },
+    ): Promise<Users> {
+        if (!headers.access_token) {
+            throw new BadRequestException('Unauthorized')
+        }
+        if (headers.access_token !== 'leasfund.com') {
+            throw new BadRequestException('Akses Token Salah!')
+        }
+        return this.userService.loginOTP(user.email, user);
+    }
+
+    @Post("confirmotp")
+    @HttpCode(200)
+    async confirmation(
+        @Body() user: Partial<Users>,
+        @Headers() headers: { access_token: string },
+    ): Promise<Users> {
+        if (!headers.access_token) {
+            throw new BadRequestException('Unauthorized')
+        }
+        if (headers.access_token !== 'leasfund.com') {
+            throw new BadRequestException('Akses Token Salah!')
+        }
+        return this.userService.confirmOTP(user.otp, user);
+    }
+
     @Put("update/:uuid")
     async update(
         @Param("uuid") uuid: string,

@@ -3,19 +3,21 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Users } from "src/entity/user/user.entity";
 import { FindOptionsWhere, Like, Repository } from "typeorm";
 import * as bcrypt from "bcrypt"
-import { generateRandomString } from "src/utils";
+import { generateOtp, generateRandomString } from "src/utils";
+import { EmailService } from "../mail/mail.service"
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(Users)
         private readonly userRepository: Repository<Users>,
+        private readonly emailService: EmailService,
     ) { }
 
     // Create user
     async create(user: Partial<Users>): Promise<Users> {
-        const saltRounds = 10;
-        user.password = await bcrypt.hash(user.password, saltRounds);
+        // const saltRounds = 10;
+        // user.password = await bcrypt.hash(user.password, saltRounds);
         user.referral_code = generateRandomString();
         const existData = await this.userRepository.findOne({
             where: [{
@@ -66,5 +68,39 @@ export class UserService {
     // Delete user
     async delete(uuid: string): Promise<void> {
         await this.userRepository.softDelete(uuid)
+    }
+
+    // Login User
+    async loginOTP(email: string, updateData: Partial<Users>): Promise<Users> {
+        // Find user by email
+        const user = await this.userRepository.findOne({ where: { email } });
+
+        if (!user) {
+            throw new Error('User not found'); // Handle case where the user does not exist
+        }
+
+        const otp = generateOtp();
+        await this.emailService.sendOtpEmail(email, otp);
+
+        // Update user fields
+        const updatedUser = Object.assign(user, { ...updateData, otp: otp });
+
+        // Save the updated user back to the database
+        return this.userRepository.save(updatedUser);
+    }
+
+    // Login User
+    async confirmOTP(otp: string, updateData: Partial<Users>): Promise<Users> {
+        // Find user by email
+        const user = await this.userRepository.findOne({ where: { otp: otp, email: updateData?.email, deleted_at: null } });
+
+        if (!user) {
+            throw new Error('User not found'); // Handle case where the user does not exist
+        }
+
+        const updatedUser = Object.assign(user, { ...updateData, otp: null });
+
+        // Save the updated user back to the database
+        return this.userRepository.save(updatedUser);
     }
 }

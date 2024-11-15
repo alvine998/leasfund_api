@@ -66,8 +66,19 @@ export class UserService {
     }
 
     // Delete user
-    async delete(uuid: string): Promise<void> {
-        await this.userRepository.softDelete(uuid)
+    async delete(uuid: string): Promise<{ message: string }> {
+        const existData = await this.userRepository.findOne({
+            where: {
+                deleted_at: null,
+                uuid: uuid,
+            }
+        })
+        if (existData) {
+            await this.userRepository.softDelete(uuid)
+            return { message: "Data Berhasil Dihapus!" };
+        } else {
+            throw new BadRequestException('Data tidak terdaftar!')
+        }
     }
 
     // Login User

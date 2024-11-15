@@ -7,6 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { userModule } from './module/user/user.module';
 import { ProductController } from './controllers/product/product.controller';
 import { productModule } from './module/product/product.module';
+import { brandModule } from './module/brand/brand.module';
+import { BrandController } from './controllers/brand/brand.controller';
+import { typeModule } from './module/type/type.module';
+import { TypeController } from './controllers/type/type.controller';
 
 @Module({
   imports: [
@@ -22,12 +26,16 @@ import { productModule } from './module/product/product.module';
       synchronize: true, // don't use in prod
     }),
     userModule,
-    productModule
+    productModule,
+    brandModule,
+    typeModule
   ],
   controllers: [
     AppController,
     UserController,
-    ProductController
+    ProductController,
+    BrandController,
+    TypeController
   ],
   providers: [AppService],
 })

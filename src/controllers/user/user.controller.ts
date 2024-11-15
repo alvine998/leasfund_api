@@ -103,7 +103,7 @@ export class UserController {
     async delete(
         @Param("uuid") uuid: string,
         @Headers() headers: { access_token: string },
-    ): Promise<void> {
+    ): Promise<{ message: string }> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }

@@ -57,7 +57,18 @@ export class ProductService {
     }
 
     // Delete
-    async delete(uuid: string): Promise<void> {
-        await this.productRepository.softDelete(uuid)
+    async delete(uuid: string): Promise<{ message: string }> {
+        const existData = await this.productRepository.findOne({
+            where: {
+                deleted_at: null,
+                uuid: uuid,
+            }
+        })
+        if (existData) {
+            await this.productRepository.softDelete(uuid);
+            return { message: "Data Berhasil Dihapus!" };
+        } else {
+            throw new BadRequestException('Data tidak terdaftar!')
+        }
     }
 }

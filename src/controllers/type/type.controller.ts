@@ -1,10 +1,10 @@
 import { BadRequestException, Body, Controller, Delete, Get, Headers, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
-import { Products } from "src/entity/product/product.entity";
-import { ProductService } from "src/services/product/product.service";
+import { Types } from "src/entity/type/type.entity";
+import { TypeService } from "src/services/type/type.service";
 
-@Controller("product")
-export class ProductController {
-    constructor(private readonly productService: ProductService) { }
+@Controller("type")
+export class TypeController {
+    constructor(private readonly typeService: TypeService) { }
 
     @Get("list")
     @HttpCode(200)
@@ -13,8 +13,9 @@ export class ProductController {
         @Query('page') page: string,
         @Query('limit') limit: string,
         @Query('search') search: string,
-        @Query('code') code: string
-    ): Promise<{ total_items: number, items: Products[] }> {
+        @Query('status') status: number,
+        @Query('brand_id') brand_id: number
+    ): Promise<{ total_items: number, items: Types[] }> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
@@ -23,51 +24,52 @@ export class ProductController {
         }
         const pageNumber = parseInt(page, 10) || 1; // Default to page 1
         const limitNumber = parseInt(limit, 10) || 10; // Default to 10 records
-        return this.productService.findAll(pageNumber, limitNumber, { code, search });
+        return this.typeService.findAll(pageNumber, limitNumber, { brand_id, status, search });
     }
 
     @Get("single/:uuid")
     @HttpCode(200)
     async findOne(@Param('uuid') uuid: string, @Headers() headers: { access_token: string },
-    ): Promise<Products> {
+    ): Promise<Types> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.productService.findOne(uuid);
+        return this.typeService.findOne(uuid);
     }
 
     @Post("create")
     @HttpCode(200)
     async create(
-        @Body() product: Partial<Products>,
+        @Body() type: Partial<Types>,
         @Headers() headers: { access_token: string },
-    ): Promise<Products> {
+    ): Promise<Types> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.productService.create(product);
+        return this.typeService.create(type);
     }
 
     @Put("update/:uuid")
     async update(
         @Param("uuid") uuid: string,
-        @Body() product: Partial<Products>,
+        @Body() type: Partial<Types>,
         @Headers() headers: { access_token: string },
-    ): Promise<Products> {
+    ): Promise<Types> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.productService.update(uuid, product);
+        return this.typeService.update(uuid, type);
     }
+
     @Delete("delete/:uuid")
     async delete(
         @Param("uuid") uuid: string,
@@ -79,6 +81,6 @@ export class ProductController {
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.productService.delete(uuid);
+        return this.typeService.delete(uuid);
     }
 }

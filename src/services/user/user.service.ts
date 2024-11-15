@@ -109,9 +109,11 @@ export class UserService {
             throw new Error('User not found'); // Handle case where the user does not exist
         }
 
-        const updatedUser = Object.assign(user, { ...updateData, otp: null });
+        if (user) {
+            const updatedUser = Object.assign(user, { ...updateData, otp: null });
 
-        // Save the updated user back to the database
-        return this.userRepository.save(updatedUser);
+            // Save the updated user back to the database
+            return this.userRepository.save(updatedUser);
+        }
     }
 }

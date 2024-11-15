@@ -11,6 +11,8 @@ import { brandModule } from './module/brand/brand.module';
 import { BrandController } from './controllers/brand/brand.controller';
 import { typeModule } from './module/type/type.module';
 import { TypeController } from './controllers/type/type.controller';
+import { bannerModule } from './module/banner/banner.module';
+import { BannerController } from './controllers/banner/banner.controller';
 
 @Module({
   imports: [
@@ -28,14 +30,16 @@ import { TypeController } from './controllers/type/type.controller';
     userModule,
     productModule,
     brandModule,
-    typeModule
+    typeModule,
+    bannerModule
   ],
   controllers: [
     AppController,
     UserController,
     ProductController,
     BrandController,
-    TypeController
+    TypeController,
+    BannerController
   ],
   providers: [AppService],
 })

@@ -34,6 +34,12 @@ export class Users {
     @Column({ nullable: true })
     otp: string;
 
+    @Column({ nullable: true })
+    ktp: string;
+
+    @Column({ nullable: true })
+    photo: string;
+
     @Column({ default: 1 })
     status: number;
 

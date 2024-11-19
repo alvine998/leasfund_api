@@ -13,6 +13,8 @@ import { typeModule } from './module/type/type.module';
 import { TypeController } from './controllers/type/type.controller';
 import { bannerModule } from './module/banner/banner.module';
 import { BannerController } from './controllers/banner/banner.controller';
+import { uploadModule } from './module/upload/upload.module';
+import { StorageController } from './controllers/storage/storage.controller';
 
 @Module({
   imports: [
@@ -31,7 +33,8 @@ import { BannerController } from './controllers/banner/banner.controller';
     productModule,
     brandModule,
     typeModule,
-    bannerModule
+    bannerModule,
+    uploadModule
   ],
   controllers: [
     AppController,
@@ -39,7 +42,8 @@ import { BannerController } from './controllers/banner/banner.controller';
     ProductController,
     BrandController,
     TypeController,
-    BannerController
+    BannerController,
+    StorageController
   ],
   providers: [AppService],
 })

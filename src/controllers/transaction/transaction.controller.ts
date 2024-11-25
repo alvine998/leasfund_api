@@ -1,10 +1,10 @@
 import { BadRequestException, Body, Controller, Delete, Get, Headers, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
-import { Customers, HouseStatus, MarriedStatus } from "src/entity/customer/customer.entity";
-import { CustomerService } from "src/services/customer/customer.service";
+import { Transactions } from "src/entity/transaction/transaction.entity";
+import { TransactionService } from "src/services/transaction/transaction.service";
 
-@Controller("customer")
-export class CustomerController {
-    constructor(private readonly customerService: CustomerService) { }
+@Controller("transaction")
+export class TransactionController {
+    constructor(private readonly transactionService: TransactionService) { }
 
     @Get("list")
     @HttpCode(200)
@@ -14,11 +14,15 @@ export class CustomerController {
         @Query('limit') limit: string,
         @Query('search') search: string,
         @Query('status') status: number,
-        @Query('marriage_status') marriage_status: MarriedStatus,
-        @Query('house_status') house_status: HouseStatus,
-        @Query('nik') nik: number,
-        @Query('phone') phone: string,
-    ): Promise<{ total_items: number, items: Customers[] }> {
+        @Query('year') year: number,
+        @Query('bpkb') bpkb: string,
+        @Query('brand') brand: string,
+        @Query('customer_uuid') customer_uuid: string,
+        @Query('user_uuid') user_uuid: string,
+        @Query('loan_amount') loan_amount: number,
+        @Query('plat_no') plat_no: string,
+        @Query('tenor') tenor: number,
+    ): Promise<{ total_items: number, items: Transactions[] }> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
@@ -27,50 +31,50 @@ export class CustomerController {
         }
         const pageNumber = parseInt(page, 10) || 1; // Default to page 1
         const limitNumber = parseInt(limit, 10) || 10; // Default to 10 records
-        return this.customerService.findAll(pageNumber, limitNumber, { status, marriage_status, house_status, nik, phone, search });
+        return this.transactionService.findAll(pageNumber, limitNumber, { brand, customer_uuid, loan_amount, user_uuid, plat_no, tenor, status, year, bpkb, search });
     }
 
     @Get("single/:uuid")
     @HttpCode(200)
     async findOne(@Param('uuid') uuid: string, @Headers() headers: { access_token: string },
-    ): Promise<Customers> {
+    ): Promise<Transactions> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.customerService.findOne(uuid);
+        return this.transactionService.findOne(uuid);
     }
 
     @Post("create")
     @HttpCode(200)
     async create(
-        @Body() customer: Partial<Customers>,
+        @Body() transaction: Partial<Transactions>,
         @Headers() headers: { access_token: string },
-    ): Promise<Customers> {
+    ): Promise<Transactions> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.customerService.create(customer);
+        return this.transactionService.create(transaction);
     }
 
     @Put("update/:uuid")
     async update(
         @Param("uuid") uuid: string,
-        @Body() customer: Partial<Customers>,
+        @Body() transaction: Partial<Transactions>,
         @Headers() headers: { access_token: string },
-    ): Promise<Customers> {
+    ): Promise<Transactions> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
         }
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.customerService.update(uuid, customer);
+        return this.transactionService.update(uuid, transaction);
     }
     @Delete("delete/:uuid")
     async delete(
@@ -83,6 +87,6 @@ export class CustomerController {
         if (headers.access_token !== 'leasfund.com') {
             throw new BadRequestException('Akses Token Salah!')
         }
-        return this.customerService.delete(uuid);
+        return this.transactionService.delete(uuid);
     }
 }

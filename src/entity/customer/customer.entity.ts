@@ -26,12 +26,6 @@ export class Customers {
     name: string;
 
     @Column()
-    user_uuid: string;
-
-    @Column()
-    user_name: string;
-
-    @Column()
     mother_name: string;
 
     @Column({ nullable: true })

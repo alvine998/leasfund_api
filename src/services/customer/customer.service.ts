@@ -29,14 +29,13 @@ export class CustomerService {
     }
 
     // Get Users
-    async findAll(page: number = 1, limit: number = 10, query: { status?: number, marriage_status?: MarriedStatus, house_status?: HouseStatus, user_uuid?: string, nik?: number, phone?: string, search?: string }): Promise<{ total_items: number, items: Customers[] }> {
+    async findAll(page: number = 1, limit: number = 10, query: { status?: number, marriage_status?: MarriedStatus, house_status?: HouseStatus, nik?: number, phone?: string, search?: string }): Promise<{ total_items: number, items: Customers[] }> {
         const [items, total_items] = await this.userRepository.findAndCount({
             where: {
                 ...query.nik && { nik: query.nik },
                 ...query.marriage_status && { marriage_status: query.marriage_status },
                 ...query.status && { status: query.status },
                 ...query.house_status && { house_status: query.house_status },
-                ...query.user_uuid && { user_uuid: query.user_uuid },
                 ...query.phone && { phone: query.phone },
                 ...query.search && { name: Like(`%${query.search}%`) },
                 deleted_at: null

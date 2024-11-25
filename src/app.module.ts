@@ -17,6 +17,8 @@ import { uploadModule } from './module/upload/upload.module';
 import { StorageController } from './controllers/storage/storage.controller';
 import { customerModule } from './module/customer/customer.module';
 import { CustomerController } from './controllers/customer/customer.controller';
+import { transactionModule } from './module/transaction/transaction.module';
+import { TransactionController } from './controllers/transaction/transaction.controller';
 
 @Module({
   imports: [
@@ -37,7 +39,8 @@ import { CustomerController } from './controllers/customer/customer.controller';
     typeModule,
     bannerModule,
     uploadModule,
-    customerModule
+    customerModule,
+    transactionModule
   ],
   controllers: [
     AppController,
@@ -47,7 +50,8 @@ import { CustomerController } from './controllers/customer/customer.controller';
     TypeController,
     BannerController,
     StorageController,
-    CustomerController
+    CustomerController,
+    TransactionController
   ],
   providers: [AppService],
 })

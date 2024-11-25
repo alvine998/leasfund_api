@@ -17,6 +17,12 @@ export class Transactions {
     @Column()
     customer_name: string;
 
+    @Column()
+    leasing_uuid: string;
+
+    @Column()
+    leasing_name: string;
+
     @Column({ nullable: true })
     brand: string;
 

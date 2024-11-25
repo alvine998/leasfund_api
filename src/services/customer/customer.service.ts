@@ -29,7 +29,7 @@ export class CustomerService {
     }
 
     // Get Users
-    async findAll(page: number = 1, limit: number = 10, query: { status?: number, marriage_status?: MarriedStatus, house_status?: HouseStatus, nik?: number, phone?: string, search?: string }): Promise<{ total_items: number, items: Customers[] }> {
+    async findAll(page: number = 1, limit: number = 10, query: { status?: number, marriage_status?: MarriedStatus, house_status?: HouseStatus, nik?: string, phone?: string, search?: string }): Promise<{ total_items: number, items: Customers[] }> {
         const [items, total_items] = await this.userRepository.findAndCount({
             where: {
                 ...query.nik && { nik: query.nik },

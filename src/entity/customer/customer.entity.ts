@@ -42,7 +42,7 @@ export class Customers {
 
     @Length(1, 16)
     @Column()
-    nik: number;
+    nik: string;
 
     @Column({ nullable: true })
     ktp: string;

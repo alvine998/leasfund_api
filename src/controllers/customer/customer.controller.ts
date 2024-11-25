@@ -16,7 +16,7 @@ export class CustomerController {
         @Query('status') status: number,
         @Query('marriage_status') marriage_status: MarriedStatus,
         @Query('house_status') house_status: HouseStatus,
-        @Query('nik') nik: number,
+        @Query('nik') nik: string,
         @Query('phone') phone: string,
     ): Promise<{ total_items: number, items: Customers[] }> {
         if (!headers.access_token) {

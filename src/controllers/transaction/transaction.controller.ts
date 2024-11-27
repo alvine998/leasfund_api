@@ -21,6 +21,8 @@ export class TransactionController {
         @Query('user_uuid') user_uuid: string,
         @Query('loan_amount') loan_amount: number,
         @Query('plat_no') plat_no: string,
+        @Query('date_start') date_start: Date,
+        @Query('date_end') date_end: Date,
         @Query('tenor') tenor: number,
     ): Promise<{ total_items: number, items: Transactions[] }> {
         if (!headers.access_token) {
@@ -31,7 +33,7 @@ export class TransactionController {
         }
         const pageNumber = parseInt(page, 10) || 1; // Default to page 1
         const limitNumber = parseInt(limit, 10) || 10; // Default to 10 records
-        return this.transactionService.findAll(pageNumber, limitNumber, { brand, customer_uuid, loan_amount, user_uuid, plat_no, tenor, status, year, bpkb, search });
+        return this.transactionService.findAll(pageNumber, limitNumber, { brand, customer_uuid, loan_amount, user_uuid, plat_no, tenor, status, year, bpkb, search, date_start, date_end });
     }
 
     @Get("single/:uuid")

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Transactions } from "src/entity/transaction/transaction.entity";
-import { FindOptionsWhere, Like, Repository } from "typeorm";
+import { Between, FindOptionsWhere, Like, Repository } from "typeorm";
 
 @Injectable()
 export class TransactionService {
@@ -27,7 +27,7 @@ export class TransactionService {
     }
 
     // Get Users
-    async findAll(page: number = 1, limit: number = 10, query: { status?: number, plat_no?: string, user_uuid?: string, customer_uuid?: string, brand?: string, year?: number, bpkb?: string, tenor?: number, loan_amount?: number, search?: string }): Promise<{ total_items: number, items: Transactions[] }> {
+    async findAll(page: number = 1, limit: number = 10, query: { status?: number, plat_no?: string, user_uuid?: string, customer_uuid?: string, brand?: string, year?: number, bpkb?: string, tenor?: number, loan_amount?: number, search?: string, date_start?: Date, date_end?: Date }): Promise<{ total_items: number, items: Transactions[] }> {
         const [items, total_items] = await this.transactionRepository.findAndCount({
             where: {
                 ...query.customer_uuid && { customer_uuid: query.customer_uuid },
@@ -38,6 +38,7 @@ export class TransactionService {
                 ...query.bpkb && { bpkb: query.bpkb },
                 ...query.tenor && { tenor: query.tenor },
                 ...query.loan_amount && { loan_amount: query.loan_amount },
+                ...query.date_start && query.date_end && { created_at: Between(query.date_start, query.date_end) },
                 ...query.search && { name: Like(`%${query.search}%`) },
                 deleted_at: null
             },

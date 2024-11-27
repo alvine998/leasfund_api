@@ -39,7 +39,7 @@ export class TransactionService {
                 ...query.tenor && { tenor: query.tenor },
                 ...query.loan_amount && { loan_amount: query.loan_amount },
                 ...query.date_start && query.date_end && { created_at: Between(query.date_start, query.date_end) },
-                ...query.search && { name: Like(`%${query.search}%`) },
+                ...query.search && { customer_name: Like(`%${query.search}%`) },
                 deleted_at: null
             },
             skip: (page - 1) * limit,

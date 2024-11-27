@@ -15,6 +15,8 @@ export class UserController {
         @Query('search') search: string,
         @Query('email') email: string,
         @Query('phone') phone: string,
+        @Query('status') status: number,
+        @Query('following_referral_code') following_referral_code: string,
     ): Promise<{ total_items: number, items: Users[] }> {
         if (!headers.access_token) {
             throw new BadRequestException('Unauthorized')
@@ -24,7 +26,7 @@ export class UserController {
         }
         const pageNumber = parseInt(page, 10) || 1; // Default to page 1
         const limitNumber = parseInt(limit, 10) || 10; // Default to 10 records
-        return this.userService.findAll(pageNumber, limitNumber, { email, phone, search });
+        return this.userService.findAll(pageNumber, limitNumber, { email, phone, search, following_referral_code, status });
     }
 
     @Get("single/:uuid")

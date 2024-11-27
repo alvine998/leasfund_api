@@ -36,11 +36,13 @@ export class UserService {
     }
 
     // Get Users
-    async findAll(page: number = 1, limit: number = 10, query: { email?: string, phone?: string, search?: string }): Promise<{ total_items: number, items: Users[] }> {
+    async findAll(page: number = 1, limit: number = 10, query: { email?: string, phone?: string, search?: string, following_referral_code?: string, status?: number }): Promise<{ total_items: number, items: Users[] }> {
         const [items, total_items] = await this.userRepository.findAndCount({
             where: {
                 ...query.email && { email: query.email },
                 ...query.phone && { phone: query.phone },
+                ...query.status && { status: query.status },
+                ...query.following_referral_code && { following_referral_code: query.following_referral_code },
                 ...query.search && { name: Like(`%${query.search}%`) },
                 deleted_at: null
             },

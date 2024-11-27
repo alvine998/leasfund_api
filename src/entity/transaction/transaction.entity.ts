@@ -53,6 +53,12 @@ export class Transactions {
     @Column({ nullable: true })
     remarks: string;
 
+    @Column({ nullable: true })
+    commission: number;
+
+    @Column({ nullable: true })
+    point: number;
+
     @Column({ default: 1 })
     status: number;
 

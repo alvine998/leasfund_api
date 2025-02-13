@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Like, Repository } from "typeorm";
 import * as bcrypt from "bcrypt"
-import { generateRandomString } from "src/utils";
-import { Types } from "src/entity/type/type.entity";
+import { generateRandomString } from "../../utils";
+import { Types } from "../../entity/type/type.entity";
 
 @Injectable()
 export class TypeService {

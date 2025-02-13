@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, Get, Headers, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
-import { Types } from "src/entity/type/type.entity";
-import { TypeService } from "src/services/type/type.service";
+import { Types } from "../../entity/type/type.entity";
+import { TypeService } from "../../services/type/type.service";
 
 @Controller("type")
 export class TypeController {

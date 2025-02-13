@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, Get, Headers, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
-import { Products } from "src/entity/product/product.entity";
-import { ProductService } from "src/services/product/product.service";
+import { Products } from "../../entity/product/product.entity";
+import { ProductService } from "../../services/product/product.service";
 
 @Controller("product")
 export class ProductController {

@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, Get, Headers, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
-import { Users } from "src/entity/user/user.entity";
-import { UserService } from "src/services/user/user.service";
+import { Users } from "../../entity/user/user.entity";
+import { UserService } from "../../services/user/user.service";
 
 @Controller("user")
 export class UserController {

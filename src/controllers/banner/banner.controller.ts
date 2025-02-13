@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, Headers, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
-import { Banners } from "src/entity/banner/banner.entity";
-import { Brands } from "src/entity/brand/brand.entity";
-import { BannerService } from "src/services/banner/banner.service";
+import { Banners } from "../../entity/banner/banner.entity";
+import { Brands } from "../../entity/brand/brand.entity";
+import { BannerService } from "../../services/banner/banner.service";
 
 @Controller("banner")
 export class BannerController {

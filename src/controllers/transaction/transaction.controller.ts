@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, Get, Headers, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
-import { Transactions } from "src/entity/transaction/transaction.entity";
-import { TransactionService } from "src/services/transaction/transaction.service";
+import { Transactions } from "../../entity/transaction/transaction.entity";
+import { TransactionService } from "../../services/transaction/transaction.service";
 
 @Controller("transaction")
 export class TransactionController {

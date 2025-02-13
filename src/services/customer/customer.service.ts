@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Like, Repository } from "typeorm";
-import { Customers, HouseStatus, MarriedStatus } from "src/entity/customer/customer.entity";
+import { Customers, HouseStatus, MarriedStatus } from "../../entity/customer/customer.entity";
 
 @Injectable()
 export class CustomerService {

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brands } from "src/entity/brand/brand.entity";
+import { Brands } from "../../entity/brand/brand.entity";
 import { FindOptionsWhere, Like, Repository } from "typeorm";
 
 @Injectable()

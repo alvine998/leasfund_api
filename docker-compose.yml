@@ -15,8 +15,10 @@ services:
     container_name: mysql-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS}
-      MYSQL_DATABASE: ${DB_NAME}
+       MYSQL_ROOT_PASSWORD: root1234
+       MYSQL_DATABASE: leasfund
+       MYSQL_USER: root
+       MYSQL_PASSWORD: root1234
     ports:
       - "3306:3306"
     volumes:

@@ -13,12 +13,14 @@ import { typeModule } from './module/type/type.module';
 import { TypeController } from './controllers/type/type.controller';
 import { bannerModule } from './module/banner/banner.module';
 import { BannerController } from './controllers/banner/banner.controller';
-import { uploadModule } from './module/upload/upload.module';
-import { StorageController } from './controllers/storage/storage.controller';
 import { customerModule } from './module/customer/customer.module';
 import { CustomerController } from './controllers/customer/customer.controller';
 import { transactionModule } from './module/transaction/transaction.module';
 import { TransactionController } from './controllers/transaction/transaction.controller';
+import { UploadModule } from './module/upload/upload.module';
+import { UploadController } from './controllers/upload/upload.controller';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -41,14 +43,18 @@ import { TransactionController } from './controllers/transaction/transaction.con
         connectTimeout: 30000, // 30 seconds
       }
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // Absolute path to the folder
+      serveRoot: '/uploads', // URL prefix for accessing files
+    }),
     userModule,
     productModule,
     brandModule,
     typeModule,
     bannerModule,
-    uploadModule,
     customerModule,
-    transactionModule
+    transactionModule,
+    UploadModule
   ],
   controllers: [
     AppController,
@@ -57,9 +63,9 @@ import { TransactionController } from './controllers/transaction/transaction.con
     BrandController,
     TypeController,
     BannerController,
-    StorageController,
     CustomerController,
-    TransactionController
+    TransactionController,
+    UploadController
   ],
   providers: [AppService],
 })

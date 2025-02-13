@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
+# Copy the .env file
+COPY .env .env
+
 # Build the application
 RUN npm run build
 

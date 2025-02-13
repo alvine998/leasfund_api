@@ -32,6 +32,8 @@ import { TransactionController } from './controllers/transaction/transaction.con
       database: process.env.DB_NAME || "test",
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // don't use in prod,
+      retryAttempts: 5,
+      retryDelay: 5000,
       extra: {
         connectionLimit: 10, // Set max concurrent connections
         queueLimit: 0,       // No limit on request queue

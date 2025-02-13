@@ -37,7 +37,6 @@ import { TransactionController } from './controllers/transaction/transaction.con
         queueLimit: 0,       // No limit on request queue
         waitForConnections: true, // Wait if pool is full
         connectTimeout: 30000, // 30 seconds
-        acquireTimeout: 30000, // 30 seconds
       }
     }),
     userModule,

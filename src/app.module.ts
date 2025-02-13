@@ -31,7 +31,14 @@ import { TransactionController } from './controllers/transaction/transaction.con
       password: process.env.DB_PASS || "",
       database: process.env.DB_NAME || "test",
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // don't use in prod
+      synchronize: true, // don't use in prod,
+      extra: {
+        connectionLimit: 10, // Set max concurrent connections
+        queueLimit: 0,       // No limit on request queue
+        waitForConnections: true, // Wait if pool is full
+        connectTimeout: 30000, // 30 seconds
+        acquireTimeout: 30000, // 30 seconds
+      }
     }),
     userModule,
     productModule,

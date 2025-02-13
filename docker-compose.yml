@@ -30,5 +30,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"  # Access Adminer at http://localhost:8080
+    depends_on:
+      mysql:
+        condition: service_healthy
 volumes:
   mysql_data:

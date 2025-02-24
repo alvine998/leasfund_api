@@ -18,7 +18,9 @@ services:
     container_name: mysql-db
     restart: always
     environment:
+      MYSQL_USER: root          # A user for your database
       MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_PASSWORD: root1234  # Password for the database user
       MYSQL_DATABASE: leasfund
     ports:
       - "3306:3306"
